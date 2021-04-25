@@ -8,12 +8,14 @@ using Newtonsoft.Json.Linq;
 
 namespace TrueLayerHackerNews
 {
-    class Program
+    public class TrueLayerHackerNews
     {
         static readonly string topStoriesURL = "https://hacker-news.firebaseio.com/v0/topstories.json?print=pretty";
-        static List<ReturnStoryModel> storyList = new List<ReturnStoryModel>();
+        public List<ReturnStoryModel> storyList { get; set; }
         static void Main(string[] args)
         {
+            TrueLayerHackerNews trueLayerHackerNews = new TrueLayerHackerNews();
+            trueLayerHackerNews.setStoryList();
             int numberOfStories = 0;
             bool inputCorrect = false;
             //Checking user input
@@ -38,19 +40,19 @@ namespace TrueLayerHackerNews
 
             WebClient webClient = new WebClient();
 
-            returnStoryModels(numberOfStories, webClient);
+            trueLayerHackerNews.returnStoryModels(numberOfStories, webClient);
 
 
             string TestPath = AppDomain.CurrentDomain.BaseDirectory + numberOfStories + "HackerNewsStories.json";
 
-            writeJSONtoFile(TestPath);
+            trueLayerHackerNews.writeJSONtoFile(TestPath);
 
             Console.WriteLine("Your file at been create at " + TestPath);
             Console.WriteLine("press any button followed by enter to exit the program");
             Console.ReadLine();
         }
 
-        private static void returnStoryModels(int numberOfStories, WebClient webClient)
+        public void returnStoryModels(int numberOfStories, WebClient webClient)
         {
             /*
              * This Method populates the storyList with the request number of ReturnStoryModel classes
@@ -76,7 +78,7 @@ namespace TrueLayerHackerNews
 
         }
 
-        private static RetrieveStoryModel getStoryJson(string storyNumber, WebClient webClient)
+        public   RetrieveStoryModel getStoryJson(string storyNumber, WebClient webClient)
         {
             //Method to return a RetrieveStoryModel from the API
             const string FIRSTHALFURL = "https://hacker-news.firebaseio.com/v0/item/";
@@ -88,7 +90,7 @@ namespace TrueLayerHackerNews
             return getObejctFromAPI<RetrieveStoryModel>(apiUrl, webClient);
         }
 
-        private static T getObejctFromAPI<T>(string url, WebClient webClient)
+        public  T getObejctFromAPI<T>(string url, WebClient webClient)
         {
             //Return a spefied object from the HackerNews/Firebase api
             string jsonString = webClient.DownloadString(url);
@@ -97,7 +99,7 @@ namespace TrueLayerHackerNews
 
         }
 
-        private static void writeJSONtoFile(string path)
+        private void writeJSONtoFile(string path)
         {
             //Outputs the list of stories to the given path
             List<string> outputStrings = new List<string>();
@@ -107,6 +109,11 @@ namespace TrueLayerHackerNews
             }
 
             File.WriteAllLines(path, outputStrings.ToArray());
+        }
+
+        public void setStoryList()
+        {
+            storyList = new List<ReturnStoryModel>();
         }
 
     }

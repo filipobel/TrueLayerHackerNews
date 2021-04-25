@@ -52,29 +52,29 @@ namespace TrueLayerHackerNews
         }
 
         #region testingMethods
-        private bool testURL() 
+        public bool testURL() 
         {
             //Testing that the url is a valid URI as per https://tools.ietf.org/html/rfc3986
             Uri uriResult;
             bool result = Uri.TryCreate(this.Url, UriKind.Absolute, out uriResult)
-                && (uriResult.Scheme == Uri.UriSchemeHttp || uriResult.Scheme == Uri.UriSchemeHttps);
-
+                && (uriResult.Scheme == Uri.UriSchemeHttp || uriResult.Scheme == Uri.UriSchemeHttps)
+                && Uri.IsWellFormedUriString(this.Url,UriKind.Absolute);
             return result;
         }
 
-        private bool testScore()
+        public bool testScore()
         {
             //Testing that the score is >=0
             return this.Score >= 0;
         }
 
-        private bool testDescendants()
+        public bool testDescendants()
         {
             //Testing that the score is >=0
             return this.Descendants >= 0;
         }
 
-        private bool testType()
+        public bool testType()
         {
             // Testing that this of a storyType
             // The available typs are one of "job", "story", "comment", "poll", or "pollopt".
