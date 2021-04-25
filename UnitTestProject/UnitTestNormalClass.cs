@@ -13,7 +13,6 @@ namespace UnitTestProject
         {
             TrueLayerHackerNews.TrueLayerHackerNews trueLayerHackerNews = new TrueLayerHackerNews.TrueLayerHackerNews();
             WebClient webclient = new WebClient();
-            trueLayerHackerNews.setStoryList();
             trueLayerHackerNews.returnStoryModels(1, webclient);
 
             Assert.AreEqual(trueLayerHackerNews.storyList.Count, 1);
@@ -24,22 +23,20 @@ namespace UnitTestProject
         {
             TrueLayerHackerNews.TrueLayerHackerNews trueLayerHackerNews = new TrueLayerHackerNews.TrueLayerHackerNews();
             WebClient webclient = new WebClient();
-            trueLayerHackerNews.setStoryList();
             trueLayerHackerNews.returnStoryModels(2, webclient);
 
             Assert.AreEqual(trueLayerHackerNews.storyList.Count, 2);
         }
 
-      /*  [TestMethod]
+        [TestMethod]
         public void TestReturnStoryModel100()
         {
             TrueLayerHackerNews.TrueLayerHackerNews trueLayerHackerNews = new TrueLayerHackerNews.TrueLayerHackerNews();
             WebClient webclient = new WebClient();
-            trueLayerHackerNews.setStoryList();
             trueLayerHackerNews.returnStoryModels(100, webclient);
 
             Assert.AreEqual(trueLayerHackerNews.storyList.Count, 100);
-        } */
+        } 
 
         [TestMethod]
         public void TestGetStoryJsonStory()

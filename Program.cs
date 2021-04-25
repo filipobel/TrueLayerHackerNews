@@ -10,12 +10,16 @@ namespace TrueLayerHackerNews
 {
     public class TrueLayerHackerNews
     {
+        public TrueLayerHackerNews()
+        {
+            storyList = new List<ReturnStoryModel>();
+        }
+
         static readonly string topStoriesURL = "https://hacker-news.firebaseio.com/v0/topstories.json?print=pretty";
         public List<ReturnStoryModel> storyList { get; set; }
         static void Main(string[] args)
         {
             TrueLayerHackerNews trueLayerHackerNews = new TrueLayerHackerNews();
-            trueLayerHackerNews.setStoryList();
             int numberOfStories = 0;
             bool inputCorrect = false;
             //Checking user input
@@ -37,7 +41,7 @@ namespace TrueLayerHackerNews
                     inputCorrect = true;
                 }
             }
-
+            Console.WriteLine("Your json file is being created please stand by...");
             WebClient webClient = new WebClient();
 
             trueLayerHackerNews.returnStoryModels(numberOfStories, webClient);
@@ -47,7 +51,7 @@ namespace TrueLayerHackerNews
 
             trueLayerHackerNews.writeJSONtoFile(TestPath);
 
-            Console.WriteLine("Your file at been create at " + TestPath);
+            Console.WriteLine("Your file has been created at been create at " + TestPath);
             Console.WriteLine("press any button followed by enter to exit the program");
             Console.ReadLine();
         }
@@ -101,20 +105,18 @@ namespace TrueLayerHackerNews
 
         private void writeJSONtoFile(string path)
         {
+            JsonSerializer jsonSerializer = new JsonSerializer();
             //Outputs the list of stories to the given path
             List<string> outputStrings = new List<string>();
             foreach(ReturnStoryModel rsm in storyList)
             {
-                outputStrings.Add(JsonConvert.SerializeObject(rsm, Formatting.Indented));
+                outputStrings.Add(JsonConvert.SerializeObject(rsm, Formatting.Indented) + ",");
             }
 
-            File.WriteAllLines(path, outputStrings.ToArray());
+            File.WriteAllText(path, JsonConvert.SerializeObject(storyList, Formatting.Indented));
         }
 
-        public void setStoryList()
-        {
-            storyList = new List<ReturnStoryModel>();
-        }
+
 
     }
 
