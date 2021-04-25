@@ -13,10 +13,13 @@ namespace TrueLayerHackerNews
         public TrueLayerHackerNews()
         {
             storyList = new List<ReturnStoryModel>();
+            webClient = new WebClient();
         }
 
         static readonly string topStoriesURL = "https://hacker-news.firebaseio.com/v0/topstories.json?print=pretty";
         public List<ReturnStoryModel> storyList { get; set; }
+
+        private WebClient webClient { get; set; }
         static void Main(string[] args)
         {
             TrueLayerHackerNews trueLayerHackerNews = new TrueLayerHackerNews();
@@ -42,9 +45,8 @@ namespace TrueLayerHackerNews
                 }
             }
             Console.WriteLine("Your json file is being created please stand by...");
-            WebClient webClient = new WebClient();
 
-            trueLayerHackerNews.returnStoryModels(numberOfStories, webClient);
+            trueLayerHackerNews.returnStoryModels(numberOfStories);
 
 
             string TestPath = AppDomain.CurrentDomain.BaseDirectory + numberOfStories + "HackerNewsStories.json";
@@ -56,19 +58,19 @@ namespace TrueLayerHackerNews
             Console.ReadLine();
         }
 
-        public void returnStoryModels(int numberOfStories, WebClient webClient)
+        public void returnStoryModels(int numberOfStories)
         {
             /*
              * This Method populates the storyList with the request number of ReturnStoryModel classes
              * that can then be seralized into a json object to output to a file
              */
-            List<string> topStories = getObejctFromAPI<List<string>>(topStoriesURL, webClient);
+            List<string> topStories = getObejctFromAPI<List<string>>(topStoriesURL);
 
             int returnStories = 1;
             int retrieveStoryNumber = 0;
             while (returnStories <= numberOfStories)
             {
-                RetrieveStoryModel retrieveStoryModel = getStoryJson(topStories[retrieveStoryNumber], webClient);
+                RetrieveStoryModel retrieveStoryModel = getStoryJson(topStories[retrieveStoryNumber]);
                 retrieveStoryNumber++;
 
                 if (retrieveStoryModel.testStory())
@@ -82,7 +84,7 @@ namespace TrueLayerHackerNews
 
         }
 
-        public   RetrieveStoryModel getStoryJson(string storyNumber, WebClient webClient)
+        public   RetrieveStoryModel getStoryJson(string storyNumber)
         {
             //Method to return a RetrieveStoryModel from the API
             const string FIRSTHALFURL = "https://hacker-news.firebaseio.com/v0/item/";
@@ -91,10 +93,10 @@ namespace TrueLayerHackerNews
             string apiUrl = FIRSTHALFURL + storyNumber + SECONDHALFURL;
 
 
-            return getObejctFromAPI<RetrieveStoryModel>(apiUrl, webClient);
+            return getObejctFromAPI<RetrieveStoryModel>(apiUrl);
         }
 
-        public  T getObejctFromAPI<T>(string url, WebClient webClient)
+        public  T getObejctFromAPI<T>(string url)
         {
             //Return a spefied object from the HackerNews/Firebase api
             string jsonString = webClient.DownloadString(url);
@@ -105,13 +107,7 @@ namespace TrueLayerHackerNews
 
         private void writeJSONtoFile(string path)
         {
-            JsonSerializer jsonSerializer = new JsonSerializer();
             //Outputs the list of stories to the given path
-            List<string> outputStrings = new List<string>();
-            foreach(ReturnStoryModel rsm in storyList)
-            {
-                outputStrings.Add(JsonConvert.SerializeObject(rsm, Formatting.Indented) + ",");
-            }
 
             File.WriteAllText(path, JsonConvert.SerializeObject(storyList, Formatting.Indented));
         }

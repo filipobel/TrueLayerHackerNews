@@ -12,8 +12,8 @@ namespace UnitTestProject
         public void TestReturnStoryModel1()
         {
             TrueLayerHackerNews.TrueLayerHackerNews trueLayerHackerNews = new TrueLayerHackerNews.TrueLayerHackerNews();
-            WebClient webclient = new WebClient();
-            trueLayerHackerNews.returnStoryModels(1, webclient);
+
+            trueLayerHackerNews.returnStoryModels(1);
 
             Assert.AreEqual(trueLayerHackerNews.storyList.Count, 1);
         }
@@ -22,8 +22,8 @@ namespace UnitTestProject
         public void TestReturnStoryModel2()
         {
             TrueLayerHackerNews.TrueLayerHackerNews trueLayerHackerNews = new TrueLayerHackerNews.TrueLayerHackerNews();
-            WebClient webclient = new WebClient();
-            trueLayerHackerNews.returnStoryModels(2, webclient);
+
+            trueLayerHackerNews.returnStoryModels(2);
 
             Assert.AreEqual(trueLayerHackerNews.storyList.Count, 2);
         }
@@ -32,8 +32,8 @@ namespace UnitTestProject
         public void TestReturnStoryModel100()
         {
             TrueLayerHackerNews.TrueLayerHackerNews trueLayerHackerNews = new TrueLayerHackerNews.TrueLayerHackerNews();
-            WebClient webclient = new WebClient();
-            trueLayerHackerNews.returnStoryModels(100, webclient);
+
+            trueLayerHackerNews.returnStoryModels(100);
 
             Assert.AreEqual(trueLayerHackerNews.storyList.Count, 100);
         } 
@@ -57,7 +57,7 @@ namespace UnitTestProject
              */
             TrueLayerHackerNews.TrueLayerHackerNews trueLayerHackerNews = new TrueLayerHackerNews.TrueLayerHackerNews();
             WebClient webclient = new WebClient();
-            RetrieveStoryModel rsm = trueLayerHackerNews.getStoryJson("8863", webclient);
+            RetrieveStoryModel rsm = trueLayerHackerNews.getStoryJson("8863");
 
             Assert.AreEqual(rsm.Id, 8863);
             Assert.AreEqual(rsm.Descendants, 71);
@@ -72,7 +72,7 @@ namespace UnitTestProject
             TrueLayerHackerNews.TrueLayerHackerNews trueLayerHackerNews = new TrueLayerHackerNews.TrueLayerHackerNews();
             WebClient webclient = new WebClient();
 
-            List<string> returnList = trueLayerHackerNews.getObejctFromAPI<List<string>>(testUrl, webclient);
+            List<string> returnList = trueLayerHackerNews.getObejctFromAPI<List<string>>(testUrl);
 
             Assert.AreEqual(returnList.Count, 500);
         }
