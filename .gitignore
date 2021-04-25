@@ -338,3 +338,10 @@ ASALocalRun/
 
 # BeatPulse healthcheck temp database
 healthchecksdb
+/Application/10HackerNewsStories.json
+/Application/Microsoft.VisualStudio.TestPlatform.TestFramework.Extensions.dll
+/Application/Microsoft.VisualStudio.TestPlatform.TestFramework.dll
+/Application/Microsoft.VisualStudio.TestPlatform.MSTestAdapter.PlatformServices.Interface.dll
+/Application/Microsoft.VisualStudio.TestPlatform.MSTestAdapter.PlatformServices.dll
+/Application/Microsoft.VisualStudio.TestPlatform.MSTest.TestAdapter.dll
+/Application/Microsoft.TestPlatform.AdapterUtilities.dll
